@@ -450,7 +450,7 @@ RCT_EXPORT_METHOD(printColumn:(NSArray *)columnWidths
     }
 }
 
-RCT_EXPORT_METHOD(setBlob:(NSInteger) sp
+RCT_EXPORT_METHOD(setBold:(NSInteger) sp
                   withResolver:(RCTPromiseResolveBlock) resolve
                   rejecter:(RCTPromiseRejectBlock) reject)
 {

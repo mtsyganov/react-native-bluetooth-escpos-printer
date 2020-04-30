@@ -372,7 +372,7 @@ public class RNBluetoothEscposPrinterModule extends ReactContextBaseJavaModule
     }
 
     @ReactMethod
-    public void setBlob(int weight,final Promise promise) {
+    public void setBold(int weight,final Promise promise) {
         if(sendDataByte(PrinterCommand.POS_Set_Bold(weight))){
             promise.resolve(null);
         }else{

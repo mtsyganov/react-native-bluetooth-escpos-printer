@@ -113,7 +113,7 @@ export default class EscPos extends Component {
                         await BluetoothEscposPrinter.printerLeftSpace(0);
 
                         await BluetoothEscposPrinter.printerAlign(BluetoothEscposPrinter.ALIGN.CENTER);
-                        await BluetoothEscposPrinter.setBlob(0);
+                        await BluetoothEscposPrinter.setBold(0);
                         await  BluetoothEscposPrinter.printText("广州俊烨\r\n", {
                             encoding: 'GBK',
                             codepage: 0,
@@ -121,7 +121,7 @@ export default class EscPos extends Component {
                             heigthtimes: 3,
                             fonttype: 1
                         });
-                        await BluetoothEscposPrinter.setBlob(0);
+                        await BluetoothEscposPrinter.setBold(0);
                         await  BluetoothEscposPrinter.printText("销售单\r\n", {
                             encoding: 'GBK',
                             codepage: 0,

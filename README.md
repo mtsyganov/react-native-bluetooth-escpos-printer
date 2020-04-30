@@ -435,8 +435,8 @@ let options = {
 #### rotate() ####
   sets the rotation of the line.
 
-#### setBlob(int weight) ####
-  sets blob of the line.
+#### setBold(int weight) ####
+  sets font weight of the line.
 
 #### printQRCode(String content, int size, int correctionLevel) ####
   prints the qrcode.
@@ -447,7 +447,7 @@ let options = {
 ### Demos of printing a receipt ###
 ```javascript
 await BluetoothEscposPrinter.printerAlign(BluetoothEscposPrinter.ALIGN.CENTER);
-await BluetoothEscposPrinter.setBlob(0);
+await BluetoothEscposPrinter.setBold(0);
 await  BluetoothEscposPrinter.printText("广州俊烨\n\r",{
   encoding:'GBK',
   codepage:0,
@@ -455,7 +455,7 @@ await  BluetoothEscposPrinter.printText("广州俊烨\n\r",{
   heigthtimes:3,
   fonttype:1
 });
-await BluetoothEscposPrinter.setBlob(0);
+await BluetoothEscposPrinter.setBold(0);
 await  BluetoothEscposPrinter.printText("销售单\n\r",{
   encoding:'GBK',
   codepage:0,
