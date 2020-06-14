@@ -4,6 +4,7 @@ package cn.jystudio.bluetooth;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothClass;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -136,9 +137,12 @@ public class RNBluetoothManagerModule extends ReactContextBaseJavaModule
             Set<BluetoothDevice> boundDevices = adapter.getBondedDevices();
             for (BluetoothDevice d : boundDevices) {
                 try {
+                    BluetoothClass cls = d.getBluetoothClass();
                     JSONObject obj = new JSONObject();
                     obj.put("name", d.getName());
                     obj.put("address", d.getAddress());
+                    obj.put("deviceClass", cls.getDeviceClass());
+                    obj.put("deviceMajorClass", cls.getMajorDeviceClass());
                     pairedDeivce.pushString(obj.toString());
                 } catch (Exception e) {
                     //ignore.
@@ -189,9 +193,12 @@ public class RNBluetoothManagerModule extends ReactContextBaseJavaModule
             Set<BluetoothDevice> boundDevices = adapter.getBondedDevices();
             for (BluetoothDevice d : boundDevices) {
                 try {
+                    BluetoothClass cls = d.getBluetoothClass();
                     JSONObject obj = new JSONObject();
                     obj.put("name", d.getName());
                     obj.put("address", d.getAddress());
+                    obj.put("deviceClass", cls.getDeviceClass());
+                    obj.put("deviceMajorClass", cls.getMajorDeviceClass());
                     pairedDeivce.put(obj);
                 } catch (Exception e) {
                     //ignore.
