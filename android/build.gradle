@@ -1,60 +1,77 @@
 buildscript {
-    repositories {
-        //jcenter { url "http://jcenter.bintray.com/" }
-        maven {url "http://repo.spring.io/plugins-release/"}
-        mavenCentral()
-        maven {
-            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-            url "$rootDir/../node_modules/react-native/android"
-        }
-        maven {
-            url 'https://maven.google.com'
-        }
-    }
+  repositories {
+    google()
+    mavenCentral()
+  }
 
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
-    }
+  dependencies {
+    classpath "com.android.tools.build:gradle:7.2.1"
+  }
 }
 
-apply plugin: 'com.android.library'
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+apply plugin: "com.android.library"
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: "com.facebook.react"
+}
+
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["BluetoothEscposPrinter_" + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["BluetoothEscposPrinter_" + name]).toInteger()
+}
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
 
-    defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
     }
-    lintOptions {
-        abortOnError false
-    }
-    sourceSets {
-        main {
-            aidl.srcDirs = ['src/main/java']
-        }
-    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
 }
 
 repositories {
-    //jcenter { url "http://jcenter.bintray.com/" }
-    maven {url "http://repo.spring.io/plugins-release/"}
-    mavenCentral()
-    maven {
-        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-        url "$rootDir/../node_modules/react-native/android"
-    }
-    maven {
-        url 'https://maven.google.com'
-    }
+  mavenCentral()
+  google()
 }
 
+
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.facebook.react:react-native:+'  // From node_modules
-    implementation group: 'com.android.support', name: 'support-v4', version: '27.0.0'
-    implementation "com.google.zxing:core:3.3.0"
+  // For < 0.71, this will be from the local maven repo
+  // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
+  //noinspection GradleDynamicVersion
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation "androidx.core:core-ktx:+"
+  implementation "com.google.zxing:core:3.3.0"
+  implementation "com.facebook.react:react-native"
+}
+
+if (isNewArchitectureEnabled()) {
+  react {
+    jsRootDir = file("../src/")
+    libraryName = "BluetoothEscposPrinter"
+    codegenJavaPackageName = "cn.jystudio.bluetooth"
+  }
 }
