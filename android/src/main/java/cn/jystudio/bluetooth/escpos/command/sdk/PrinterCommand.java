@@ -230,6 +230,7 @@ public class PrinterCommand {
             return null;
         }
 
+        /*
         byte[] intToWidth = {0x00, 0x10, 0x20, 0x30};
         byte[] intToHeight = {0x00, 0x01, 0x02, 0x03};
         byte[] gsExclamationMark = Arrays.copyOf(Command.GS_ExclamationMark, Command.GS_ExclamationMark.length);
@@ -240,6 +241,9 @@ public class PrinterCommand {
         escM[2] = (byte) nFontType;
         byte[] data = null;
         data = concatAll(gsExclamationMark, escT, escM, pbString);
+        */
+        // deactivate formating to avoid problems with some bt printers
+        byte[] data = pbString;
         
         return data;
     }
